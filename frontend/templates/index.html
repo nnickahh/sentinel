@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sentinel - Desktop AI Privacy Guard</title>
+  <link rel="icon" type="image/svg+xml" href="/static/assets/logo.svg">
+  <link rel="stylesheet" href="/static/css/sentinel.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-section">
+        <img src="/static/assets/logo.svg" alt="Sentinel Logo" class="app-logo">
+        <div>
+          <div class="brand-title">Sentinel</div>
+          <div class="brand-subtitle">
+            <span>Desktop AI Privacy Guard</span>
+            <span class="ai-badge" id="header-model-tag">NEMOTRON LIVE (NEMOTRON-3.5-LIGHTNING-30B-A3B)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div id="mode-badge" class="mode-badge demo" title="Toggle Monitoring Mode">
+          <span class="pulse-dot"></span> DEMO MODE (SIMULATED)
+        </div>
+        <button id="btn-settings" class="btn-icon" title="Settings & Nebius Credentials">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero / Action Section -->
+    <section class="hero-banner">
+      <!-- Privacy Score Card -->
+      <div class="score-card">
+        <div class="score-title">PRIVACY SCORE</div>
+        <div class="score-dial">
+          <svg class="score-svg" viewBox="0 0 140 140">
+            <circle class="score-track" cx="70" cy="70" r="58"/>
+            <circle id="score-path" class="score-value-path" cx="70" cy="70" r="58"/>
+          </svg>
+          <div class="score-inner">
+            <span id="score-num" class="score-number">87</span>
+            <span class="score-max">/ 100</span>
+          </div>
+        </div>
+        <div id="score-status-text" class="score-status-text">Protected & Healthy</div>
+      </div>
+
+      <!-- Action & Counters Card -->
+      <div class="action-banner">
+        <div class="banner-stats">
+          <div class="stat-box">
+            <div class="stat-label">Total Connections</div>
+            <div id="stat-total" class="stat-value">9</div>
+          </div>
+          <div class="stat-box trackers">
+            <div class="stat-label">Possible Trackers</div>
+            <div id="stat-trackers" class="stat-value">7</div>
+          </div>
+          <div class="stat-box blocked">
+            <div class="stat-label">Trackers Blocked</div>
+            <div id="stat-blocked" class="stat-value">1</div>
+          </div>
+          <div class="stat-box high-risk">
+            <div class="stat-label">High Risk Threats</div>
+            <div id="stat-high-risk" class="stat-value">1</div>
+          </div>
+        </div>
+
+        <div class="banner-buttons">
+          <button id="btn-protect-me" class="btn-protect">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Protect Me
+          </button>
+          <button id="btn-explain-privacy" class="btn-explain">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Explain My Privacy
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Activity Section -->
+    <section class="activity-section">
+      <div class="activity-header">
+        <div class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          Recent Activity
+        </div>
+        
+        <div style="display: flex; gap: 12px; align-items: center;">
+          <input type="text" id="search-input" class="search-box" placeholder="Filter by domain or app...">
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="high">High Risk</button>
+            <button class="filter-tab" data-filter="trackers">Trackers</button>
+            <button class="filter-tab" data-filter="blocked">Blocked</button>
+            <button class="filter-tab" data-filter="active">Active</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feed Container -->
+      <div id="activity-container" class="activity-list">
+        <!-- Rendered by sentinel.js -->
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= INVESTIGATE MODAL ================= -->
+  <div id="modal-investigate" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          Nemotron Telemetry Investigation
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-investigate')">&times;</button>
+      </div>
+
+      <div id="investigate-modal-body" class="modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-action btn-allow" onclick="applyModalDecision('allow')">Allow Once</button>
+        <button class="btn-action btn-allow" style="background: rgba(16, 185, 129, 0.25);" onclick="applyModalDecision('always_allow')">Always Allow</button>
+        <button class="btn-action btn-investigate" onclick="applyModalDecision('ask_later')">Ask Me Later</button>
+        <button class="btn-action btn-block" style="padding: 8px 18px;" onclick="applyModalDecision('block')">Block Domain</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= "PROTECT ME" WIZARD MODAL ================= -->
+  <div id="modal-protect" class="modal-overlay">
+    <div class="modal-card" style="max-width: 760px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Sentinel AI Protection Sweep
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-protect')">&times;</button>
+      </div>
+
+      <div id="protect-modal-body" class="modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-protect')">Cancel</button>
+        <button id="btn-apply-protect" class="btn-protect" style="padding: 10px 20px; font-size: 14px;" onclick="applyProtectionPlan()">
+          Apply Nemotron Protection Plan
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= "EXPLAIN MY PRIVACY" REPORT MODAL ================= -->
+  <div id="modal-explain" class="modal-overlay">
+    <div class="modal-card" style="max-width: 800px;">
+      <div class="modal-header">
+        <div class="modal-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Sentinel Privacy Audit Report
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-explain')">&times;</button>
+      </div>
+
+      <div id="explain-modal-body" class="modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-action btn-investigate" onclick="window.print()">Print / Export Audit</button>
+        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-explain')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SETTINGS MODAL ================= -->
+  <div id="modal-settings" class="modal-overlay">
+    <div class="modal-card" style="max-width: 560px;">
+      <div class="modal-header">
+        <div class="modal-title">Settings & Nebius Token Factory</div>
+        <button class="modal-close" onclick="closeModal('modal-settings')">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
+            Nebius Token Factory API Key
+          </label>
+          <input type="password" id="input-api-key" class="search-box" style="width: 100%; padding: 10px;" placeholder="nvapi-... or nebius_...">
+          <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;">
+            Keys are kept in local process memory and .env.
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
+            NVIDIA Nemotron Model
+          </label>
+          <input type="text" id="input-model" class="search-box" style="width: 100%; padding: 10px;" value="nvidia/nemotron-3.5-lightning-30b-a3b">
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
+            Nebius Base URL Endpoint
+          </label>
+          <input type="text" id="input-base-url" class="search-box" style="width: 100%; padding: 10px;" value="https://integrate.api.nvidia.com/v1">
+        </div>
+
+        <div style="background: var(--bg-card-inner); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
+          <div style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">CONNECTION STATUS</div>
+          <div id="nebius-status-badge" style="font-size: 14px; font-weight: 700; color: var(--emerald); margin-top: 4px;">
+            CONNECTED & ACTIVE
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid var(--border); padding-top: 14px;">
+          <button class="btn-action btn-block" onclick="resetDemoEnvironment()">
+            Reset Demo Traffic & Clear Rules
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-settings')">Cancel</button>
+        <button class="btn-action btn-allow" onclick="saveSettings()">Save Configuration</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="/static/js/sentinel.js"></script>
+</body>
+</html>
