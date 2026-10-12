@@ -78,3 +78,30 @@ Provide a clean, consumer-oriented markdown narrative (3-4 paragraphs) covering:
 3. Telemetry vs Functionality (why certain items were blocked vs safely allowed).
 4. Forward-Looking Recommendations (actionable steps to enhance local privacy).
 """
+
+ASK_QUESTION_PROMPT_TEMPLATE = """You are Sentinel — an AI Privacy Autopilot powered by NVIDIA Nemotron via Nebius Token Factory.
+The user is asking a privacy question about their desktop network activity.
+
+User Question: "{question}"
+Current Privacy Mode: {privacy_mode}
+System Privacy Score: {privacy_score}/100
+
+Active & Recent Sanitized Network Activity:
+{events_json}
+
+Active User / Autopilot Rules:
+{rules_json}
+
+Answer the user's question directly, accurately, and concisely based on the actual telemetry data above.
+Return a valid JSON object with EXACTLY this structure:
+{{
+  "answer": "Clear, helpful 2-4 sentence answer explaining what was collected, why a connection is suspicious, or summarizing today's privacy activity.",
+  "related_apps": ["chrome", "spotify"],
+  "related_domains": ["adservice.google.com"],
+  "risk_summary": "high" | "medium" | "low",
+  "recommended_actions": [
+    "Actionable recommendation 1",
+    "Actionable recommendation 2"
+  ]
+}}
+"""

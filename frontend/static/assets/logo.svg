@@ -1,27 +1,48 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
   <defs>
-    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="shieldOuter" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#10B981" />
+      <stop offset="50%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#8B5CF6" />
+    </linearGradient>
+    <linearGradient id="shieldInner" x1="15%" y1="10%" x2="85%" y2="90%">
+      <stop offset="0%" stop-color="#0B132B" />
+      <stop offset="100%" stop-color="#050814" />
+    </linearGradient>
+    <linearGradient id="coreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
       <stop offset="100%" stop-color="#06B6D4" />
     </linearGradient>
-    <linearGradient id="aiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8B5CF6" />
-      <stop offset="100%" stop-color="#3B82F6" />
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA" />
+      <stop offset="100%" stop-color="#38BDF8" />
     </linearGradient>
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="3" result="blur" />
+    <filter id="neonGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feGaussianBlur stdDeviation="3.5" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
-  <!-- Outer Shield -->
-  <path d="M50 8 L85 24 V52 C85 74 50 92 50 92 C50 92 15 74 15 52 V24 L50 8 Z" 
-        stroke="url(#shieldGrad)" stroke-width="4" fill="#0F172A" filter="url(#glow)"/>
-  <!-- Inner Neural Eye / Cyber Ring -->
-  <circle cx="50" cy="48" r="18" stroke="url(#aiGrad)" stroke-width="3" fill="#1E1B4B" />
-  <circle cx="50" cy="48" r="9" fill="#10B981" filter="url(#glow)"/>
-  <!-- Target Reticle Lines -->
-  <line x1="50" y1="23" x2="50" y2="28" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
-  <line x1="50" y1="68" x2="50" y2="73" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
-  <line x1="25" y1="48" x2="30" y2="48" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
-  <line x1="70" y1="48" x2="75" y2="48" stroke="#10B981" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Ambient Outer Hex Glow -->
+  <circle cx="60" cy="60" r="52" stroke="url(#shieldOuter)" stroke-opacity="0.18" stroke-width="1.5" stroke-dasharray="6 6" />
+
+  <!-- Outer Cyber Shield -->
+  <path d="M60 10 L102 28 V58 C102 85 60 108 60 108 C60 108 18 85 18 58 V28 L60 10 Z"
+        fill="url(#shieldInner)" stroke="url(#shieldOuter)" stroke-width="3.5" filter="url(#neonGlow)" />
+
+  <!-- Inner Bevel Shield -->
+  <path d="M60 18 L94 33 V57 C94 79 60 99 60 99 C60 99 26 79 26 57 V33 L60 18 Z"
+        fill="none" stroke="url(#ringGrad)" stroke-opacity="0.35" stroke-width="1.5" />
+
+  <!-- Neural Circuit Lines -->
+  <path d="M60 24 V36 M60 76 V88 M32 56 H42 M78 56 H88" stroke="#10B981" stroke-width="2.5" stroke-linecap="round" opacity="0.85" />
+  <path d="M40 38 L47 45 M73 67 L80 74 M80 38 L73 45 M47 67 L40 74" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" opacity="0.7" />
+
+  <!-- Cyber Reticle Ring -->
+  <circle cx="60" cy="56" r="20" fill="#0F172A" stroke="url(#ringGrad)" stroke-width="2.5" />
+  <circle cx="60" cy="56" r="14" fill="none" stroke="#10B981" stroke-opacity="0.4" stroke-width="1.5" stroke-dasharray="4 3" />
+
+  <!-- Glowing Neural Core -->
+  <circle cx="60" cy="56" r="8.5" fill="url(#coreGrad)" filter="url(#neonGlow)" />
+  <circle cx="57.5" cy="53.5" r="2.5" fill="#FFFFFF" opacity="0.9" />
 </svg>

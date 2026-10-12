@@ -1,244 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sentinel - Desktop AI Privacy Guard</title>
-  <link rel="icon" type="image/svg+xml" href="/static/assets/logo.svg">
-  <link rel="stylesheet" href="/static/css/sentinel.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentinel — Intrusion Detection System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/sentinel.css?v=20261012_sentinel_v10">
 </head>
 <body>
+    <div class="sentinel-layout">
+        <!-- ==================== LEFT SIDEBAR ==================== -->
+        <aside class="sidebar">
+            <!-- Brand Header -->
+            <div class="sidebar-brand">
+                <div class="brand-shield">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+                        <path d="M12 2L4 5.5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5.5L12 2z"
+                              fill="rgba(16, 185, 129, 0.18)" stroke="#10b981" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M13 7L9.5 12.5h3L11 17l4.5-6h-3L13 7z"
+                              fill="#10b981"/>
+                    </svg>
+                </div>
+                <div class="brand-titles">
+                    <span class="brand-name">Sentinel</span>
+                    <span class="brand-subtitle">Intrusion Detection System</span>
+                </div>
+            </div>
 
-  <div class="app-container">
-    <!-- Header -->
-    <header class="app-header">
-      <div class="brand-section">
-        <img src="/static/assets/logo.svg" alt="Sentinel Logo" class="app-logo">
-        <div>
-          <div class="brand-title">Sentinel</div>
-          <div class="brand-subtitle">
-            <span>Desktop AI Privacy Guard</span>
-            <span class="ai-badge" id="header-model-tag">NEMOTRON LIVE (NEMOTRON-3.5-LIGHTNING-30B-A3B)</span>
-          </div>
-        </div>
-      </div>
+            <!-- Navigation Menu -->
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" data-nav="overview">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+                            <path d="M12 3.2L3 10.5V20a1 1 0 0 0 1 1h5v-6h6v6h5a1 1 0 0 0 1-1v-9.5L12 3.2z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Overview</span>
+                </a>
 
-      <div class="header-actions">
-        <div id="mode-badge" class="mode-badge demo" title="Toggle Monitoring Mode">
-          <span class="pulse-dot"></span> DEMO MODE (SIMULATED)
-        </div>
-        <button id="btn-settings" class="btn-icon" title="Settings & Nebius Credentials">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </button>
-      </div>
-    </header>
+                <a href="#alerts" class="nav-item" data-nav="alerts">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Alerts</span>
+                    <span class="nav-badge" id="sidebarAlertBadge">3</span>
+                </a>
 
-    <!-- Hero / Action Section -->
-    <section class="hero-banner">
-      <!-- Privacy Score Card -->
-      <div class="score-card">
-        <div class="score-title">PRIVACY SCORE</div>
-        <div class="score-dial">
-          <svg class="score-svg" viewBox="0 0 140 140">
-            <circle class="score-track" cx="70" cy="70" r="58"/>
-            <circle id="score-path" class="score-value-path" cx="70" cy="70" r="58"/>
-          </svg>
-          <div class="score-inner">
-            <span id="score-num" class="score-number">87</span>
-            <span class="score-max">/ 100</span>
-          </div>
-        </div>
-        <div id="score-status-text" class="score-status-text">Protected & Healthy</div>
-      </div>
+                <a href="#events" class="nav-item" data-nav="events">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="8" y1="13" x2="16" y2="13"/>
+                            <line x1="8" y1="17" x2="13" y2="17"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Events</span>
+                </a>
 
-      <!-- Action & Counters Card -->
-      <div class="action-banner">
-        <div class="banner-stats">
-          <div class="stat-box">
-            <div class="stat-label">Total Connections</div>
-            <div id="stat-total" class="stat-value">9</div>
-          </div>
-          <div class="stat-box trackers">
-            <div class="stat-label">Possible Trackers</div>
-            <div id="stat-trackers" class="stat-value">7</div>
-          </div>
-          <div class="stat-box blocked">
-            <div class="stat-label">Trackers Blocked</div>
-            <div id="stat-blocked" class="stat-value">1</div>
-          </div>
-          <div class="stat-box high-risk">
-            <div class="stat-label">High Risk Threats</div>
-            <div id="stat-high-risk" class="stat-value">1</div>
-          </div>
-        </div>
+                <a href="#devices" class="nav-item" data-nav="devices" id="navDevicesBtn">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Devices</span>
+                </a>
 
-        <div class="banner-buttons">
-          <button id="btn-protect-me" class="btn-protect">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Protect Me
-          </button>
-          <button id="btn-explain-privacy" class="btn-explain">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            Explain My Privacy
-          </button>
-        </div>
-      </div>
-    </section>
+                <a href="#network-map" class="nav-item" data-nav="network-map">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="5" r="3"/>
+                            <circle cx="5" cy="19" r="3"/>
+                            <circle cx="19" cy="19" r="3"/>
+                            <line x1="10.5" y1="7.5" x2="6.5" y2="16.5"/>
+                            <line x1="13.5" y1="7.5" x2="17.5" y2="16.5"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Network Map</span>
+                </a>
 
-    <!-- Recent Activity Section -->
-    <section class="activity-section">
-      <div class="activity-header">
-        <div class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-          Recent Activity
-        </div>
-        
-        <div style="display: flex; gap: 12px; align-items: center;">
-          <input type="text" id="search-input" class="search-box" placeholder="Filter by domain or app...">
-          <div class="filter-tabs">
-            <button class="filter-tab active" data-filter="all">All</button>
-            <button class="filter-tab" data-filter="high">High Risk</button>
-            <button class="filter-tab" data-filter="trackers">Trackers</button>
-            <button class="filter-tab" data-filter="blocked">Blocked</button>
-            <button class="filter-tab" data-filter="active">Active</button>
-          </div>
-        </div>
-      </div>
+                <a href="#rules" class="nav-item" data-nav="rules">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <polyline points="9 12 11 14 15 10"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Rules</span>
+                </a>
 
-      <!-- Feed Container -->
-      <div id="activity-container" class="activity-list">
-        <!-- Rendered by sentinel.js -->
-      </div>
-    </section>
-  </div>
+                <a href="#settings" class="nav-item" data-nav="settings">
+                    <span class="nav-icon">
+                        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </span>
+                    <span class="nav-label">Settings</span>
+                </a>
+            </nav>
 
-  <!-- ================= INVESTIGATE MODAL ================= -->
-  <div id="modal-investigate" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          Nemotron Telemetry Investigation
-        </div>
-        <button class="modal-close" onclick="closeModal('modal-investigate')">&times;</button>
-      </div>
+            <!-- Sidebar Bottom Particle Wave & System Online Card -->
+            <div class="sidebar-footer">
+                <canvas id="sidebarWaveCanvas" class="sidebar-wave-canvas" width="230" height="150"></canvas>
+                <div class="system-online-card" id="systemOnlineCard" title="Click to view live Edge & Chrome telemetry">
+                    <div class="online-row">
+                        <span class="online-dot"></span>
+                        <span class="online-title">System Online</span>
+                    </div>
+                    <div class="online-updated" id="lastUpdatedText">Last updated: 2025-06-22 14:32</div>
+                </div>
+            </div>
+        </aside>
 
-      <div id="investigate-modal-body" class="modal-body">
-        <!-- Injected via JavaScript -->
-      </div>
+        <!-- ==================== MAIN CONTENT AREA ==================== -->
+        <main class="main-area">
+            <!-- Top Search & Profile Bar -->
+            <header class="topbar">
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                    <input type="text" id="globalSearchInput" placeholder="Search IPs, domains, events..." autocomplete="off">
+                </div>
 
-      <div class="modal-footer">
-        <button class="btn-action btn-allow" onclick="applyModalDecision('allow')">Allow Once</button>
-        <button class="btn-action btn-allow" style="background: rgba(16, 185, 129, 0.25);" onclick="applyModalDecision('always_allow')">Always Allow</button>
-        <button class="btn-action btn-investigate" onclick="applyModalDecision('ask_later')">Ask Me Later</button>
-        <button class="btn-action btn-block" style="padding: 8px 18px;" onclick="applyModalDecision('block')">Block Domain</button>
-      </div>
+                <div class="topbar-right">
+                    <!-- Subtle Edge & Chrome Live Link Trigger -->
+                    <button class="browser-link-chip" id="openBrowserModalBtn" title="Manage Microsoft Edge & Google Chrome Live Link">
+                        <span class="browser-chip-dot" id="browserChipDot"></span>
+                        <span id="browserChipLabel">Edge &amp; Chrome Linked</span>
+                    </button>
+
+                    <button class="notif-btn" id="notifBellBtn" title="Notifications">
+                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                        </svg>
+                        <span class="notif-dot"></span>
+                    </button>
+
+                    <button class="profile-btn" id="profileMenuBtn" title="Click to customize display name">
+                        <span class="profile-avatar">
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor">
+                                <path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/>
+                            </svg>
+                        </span>
+                        <span class="profile-name" id="profileNameText">User</span>
+                        <svg class="profile-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Greeting Banner with Dotted Emerald Particle Wave -->
+            <section class="hero-banner">
+                <canvas id="heroWaveCanvas" class="hero-wave-canvas" width="760" height="160"></canvas>
+                <div class="hero-left">
+                    <div class="hero-eyebrow">NETWORK SECURITY</div>
+                    <h1 class="hero-title" id="heroGreetingTitle">Good evening</h1>
+                    <p class="hero-subtitle" id="heroSubtitle">Sentinel is monitoring your network. No active threats at the moment.</p>
+                </div>
+                <div class="hero-right">
+                    <button class="time-dropdown-btn" id="timeRangeBtn">
+                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.9">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span id="timeRangeLabel">Last 24 hours</span>
+                        <svg class="dropdown-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ==================== UPPER DASHBOARD GRID ==================== -->
+            <div class="upper-grid">
+                <!-- Left + Center Column Group -->
+                <div class="upper-left-group">
+                    <!-- 4 KPI Cards Row -->
+                    <div class="kpi-cards-row">
+                        <!-- Card 1: Blocked threats -->
+                        <div class="kpi-card kpi-emerald">
+                            <div class="kpi-card-top">
+                                <div class="kpi-icon-circle icon-emerald">
+                                    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                        <path d="M12 8v8" opacity="0.35"/>
+                                    </svg>
+                                </div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">Blocked threats</div>
+                                    <div class="kpi-value" id="kpiBlockedThreats">0</div>
+                                    <div class="kpi-delta"><span class="delta-green" id="kpiBlockedSub">Enforced in SQLite</span></div>
+                                </div>
+                            </div>
+                            <svg class="kpi-sparkline" viewBox="0 0 220 38" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="sparkGreenFill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#10b981" stop-opacity="0.34"/>
+                                        <stop offset="100%" stop-color="#10b981" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,30 C35,14 65,34 105,24 C145,14 175,32 220,16 L220,38 L0,38 Z" fill="url(#sparkGreenFill)"/>
+                                <path d="M0,30 C35,14 65,34 105,24 C145,14 175,32 220,16" fill="none" stroke="#10b981" stroke-width="1.8"/>
+                            </svg>
+                        </div>
+
+                        <!-- Card 2: Detected intrusions -->
+                        <div class="kpi-card kpi-crimson">
+                            <div class="kpi-card-top">
+                                <div class="kpi-icon-circle icon-crimson">
+                                    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#f87171" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                                        <line x1="12" y1="9" x2="12" y2="13"/>
+                                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                    </svg>
+                                </div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">Detected intrusions</div>
+                                    <div class="kpi-value" id="kpiDetectedIntrusions">0</div>
+                                    <div class="kpi-delta"><span class="delta-green" id="kpiIntrusionsSub">No active threats</span></div>
+                                </div>
+                            </div>
+                            <svg class="kpi-sparkline" viewBox="0 0 220 38" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="sparkRedFill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.34"/>
+                                        <stop offset="100%" stop-color="#ef4444" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,32 C40,20 75,35 120,25 C160,15 190,26 220,18 L220,38 L0,38 Z" fill="url(#sparkRedFill)"/>
+                                <path d="M0,32 C40,20 75,35 120,25 C160,15 190,26 220,18" fill="none" stroke="#ef4444" stroke-width="1.8"/>
+                            </svg>
+                        </div>
+
+                        <!-- Card 3: Monitored devices -->
+                        <div class="kpi-card kpi-blue" id="kpiDevicesCard" style="cursor:pointer;" title="Click to inspect live Opera, Edge, Chrome &amp; App connections">
+                            <div class="kpi-card-top">
+                                <div class="kpi-icon-circle icon-blue">
+                                    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="4" width="18" height="12" rx="2"/>
+                                        <line x1="2" y1="20" x2="22" y2="20"/>
+                                    </svg>
+                                </div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">Monitored apps</div>
+                                    <div class="kpi-value" id="kpiMonitoredDevices">0</div>
+                                    <div class="kpi-delta"><span class="delta-blue">●</span> <span id="kpiDevicesSub">Scanning sockets...</span></div>
+                                </div>
+                            </div>
+                            <svg class="kpi-sparkline" viewBox="0 0 220 38" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="sparkBlueFill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.34"/>
+                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,31 C45,22 85,35 135,28 C175,22 195,12 220,17 L220,38 L0,38 Z" fill="url(#sparkBlueFill)"/>
+                                <path d="M0,31 C45,22 85,35 135,28 C175,22 195,12 220,17" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+                            </svg>
+                        </div>
+
+                        <!-- Card 4: Network traffic -->
+                        <div class="kpi-card kpi-indigo">
+                            <div class="kpi-card-top">
+                                <div class="kpi-icon-circle icon-indigo">
+                                    <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"/>
+                                        <line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </div>
+                                <div class="kpi-info">
+                                    <div class="kpi-label">Network traffic</div>
+                                    <div class="kpi-value" id="kpiNetworkTraffic">0.0 GB</div>
+                                    <div class="kpi-delta"><span class="delta-green" id="kpiTrafficSub">Live Windows host I/O</span></div>
+                                </div>
+                            </div>
+                            <svg class="kpi-sparkline" viewBox="0 0 220 38" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="sparkIndigoFill" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.34"/>
+                                        <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.0"/>
+                                    </linearGradient>
+                                </defs>
+                                <path d="M0,30 C35,18 85,34 130,27 C170,22 195,14 220,24 L220,38 L0,38 Z" fill="url(#sparkIndigoFill)"/>
+                                <path d="M0,30 C35,18 85,34 130,27 C170,22 195,14 220,24" fill="none" stroke="#3b82f6" stroke-width="1.8"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Mid-Row: Threat Activity + Attack Sources -->
+                    <div class="mid-panels-row">
+                        <!-- Panel 1: Threat Activity -->
+                        <section class="panel-card threat-activity-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Threat Activity</h2>
+                                <div class="chart-legend">
+                                    <span class="legend-item"><span class="legend-dot dot-emerald"></span>Blocked</span>
+                                    <span class="legend-item"><span class="legend-dot dot-blue"></span>Detected</span>
+                                </div>
+                            </div>
+                            <div class="activity-chart-wrap">
+                                <svg class="activity-svg" viewBox="0 0 470 195" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="activityBlockedGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#10b981" stop-opacity="0.36"/>
+                                            <stop offset="100%" stop-color="#10b981" stop-opacity="0.01"/>
+                                        </linearGradient>
+                                        <linearGradient id="activityDetectedGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.38"/>
+                                            <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/>
+                                        </linearGradient>
+                                        <filter id="glowEmerald" x="-20%" y="-20%" width="140%" height="140%">
+                                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                                            <feMerge>
+                                                <feMergeNode in="blur"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge>
+                                        </filter>
+                                        <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+                                            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+                                            <feMerge>
+                                                <feMergeNode in="blur"/>
+                                                <feMergeNode in="SourceGraphic"/>
+                                            </feMerge>
+                                        </filter>
+                                    </defs>
+
+                                    <!-- Y-Axis Labels -->
+                                    <g class="axis-text" text-anchor="end">
+                                        <text x="28" y="25">150</text>
+                                        <text x="28" y="68">100</text>
+                                        <text x="28" y="112">50</text>
+                                        <text x="28" y="155">0</text>
+                                    </g>
+
+                                    <!-- Grid Lines -->
+                                    <g class="chart-grid-lines">
+                                        <line x1="40" y1="21" x2="455" y2="21"/>
+                                        <line x1="40" y1="64" x2="455" y2="64"/>
+                                        <line x1="40" y1="108" x2="455" y2="108"/>
+                                        <line x1="40" y1="151" x2="455" y2="151"/>
+
+                                        <line x1="48" y1="21" x2="48" y2="151"/>
+                                        <line x1="118" y1="21" x2="118" y2="151"/>
+                                        <line x1="188" y1="21" x2="188" y2="151"/>
+                                        <line x1="258" y1="21" x2="258" y2="151"/>
+                                        <line x1="328" y1="21" x2="328" y2="151"/>
+                                        <line x1="398" y1="21" x2="398" y2="151"/>
+                                    </g>
+
+                                    <!-- Blocked Area & Curve (Emerald) -->
+                                    <path d="M40,136 C55,142 68,122 83,124 C98,126 105,137 118,133 C133,128 145,115 158,118 C172,121 180,96 196,98 C212,100 220,113 234,104 C248,95 256,75 270,77 C284,79 292,88 305,76 C318,64 326,45 338,46 C350,47 362,82 376,84 C390,86 398,70 412,72 C425,74 434,88 444,82 C450,78 453,74 455,73 L455,151 L40,151 Z"
+                                          fill="url(#activityBlockedGrad)"/>
+                                    <path d="M40,136 C55,142 68,122 83,124 C98,126 105,137 118,133 C133,128 145,115 158,118 C172,121 180,96 196,98 C212,100 220,113 234,104 C248,95 256,75 270,77 C284,79 292,88 305,76 C318,64 326,45 338,46 C350,47 362,82 376,84 C390,86 398,70 412,72 C425,74 434,88 444,82 C450,78 453,74 455,73"
+                                          fill="none" stroke="#10b981" stroke-width="2.2" filter="url(#glowEmerald)"/>
+
+                                    <!-- Detected Area & Curve (Blue) -->
+                                    <path d="M40,145 C58,148 70,135 83,136 C96,137 106,146 118,144 C132,142 145,134 158,136 C172,138 182,123 196,124 C210,125 220,136 234,132 C248,128 258,114 270,115 C282,116 294,126 305,118 C316,110 326,95 338,95 C350,95 362,118 376,120 C390,122 398,113 412,114 C425,115 434,124 444,120 C450,117 453,115 455,114 L455,151 L40,151 Z"
+                                          fill="url(#activityDetectedGrad)"/>
+                                    <path d="M40,145 C58,148 70,135 83,136 C96,137 106,146 118,144 C132,142 145,134 158,136 C172,138 182,123 196,124 C210,125 220,136 234,132 C248,128 258,114 270,115 C282,116 294,126 305,118 C316,110 326,95 338,95 C350,95 362,118 376,120 C390,122 398,113 412,114 C425,115 434,124 444,120 C450,117 453,115 455,114"
+                                          fill="none" stroke="#3b82f6" stroke-width="2" filter="url(#glowBlue)"/>
+
+                                    <!-- Key Vertex Dots -->
+                                    <g fill="#10b981">
+                                        <circle cx="83" cy="124" r="2.5"/>
+                                        <circle cx="158" cy="118" r="2.5"/>
+                                        <circle cx="196" cy="98" r="2.5"/>
+                                        <circle cx="270" cy="77" r="2.5"/>
+                                        <circle cx="338" cy="46" r="3" stroke="#d1fae5" stroke-width="1"/>
+                                        <circle cx="412" cy="72" r="2.5"/>
+                                        <circle cx="455" cy="73" r="2.5"/>
+                                    </g>
+                                    <g fill="#3b82f6">
+                                        <circle cx="83" cy="136" r="2.3"/>
+                                        <circle cx="196" cy="124" r="2.3"/>
+                                        <circle cx="270" cy="115" r="2.3"/>
+                                        <circle cx="338" cy="95" r="2.8" stroke="#dbeafe" stroke-width="1"/>
+                                        <circle cx="412" cy="114" r="2.3"/>
+                                        <circle cx="455" cy="114" r="2.3"/>
+                                    </g>
+
+                                    <!-- X-Axis Labels -->
+                                    <g class="axis-text" text-anchor="middle">
+                                        <text x="52" y="176">00:00</text>
+                                        <text x="118" y="176">04:00</text>
+                                        <text x="188" y="176">08:00</text>
+                                        <text x="258" y="176">12:00</text>
+                                        <text x="328" y="176">16:00</text>
+                                        <text x="398" y="176">20:00</text>
+                                    </g>
+                                </svg>
+                            </div>
+                        </section>
+
+                        <!-- Panel 2: Attack Sources -->
+                        <section class="panel-card attack-sources-card">
+                            <div class="panel-header">
+                                <h2 class="panel-title">Attack Sources</h2>
+                            </div>
+                            <div class="attack-sources-body">
+                                <!-- World Map with Glowing Trajectories -->
+                                <div class="world-map-wrap">
+                                    <svg class="world-map-svg" viewBox="0 0 320 175" preserveAspectRatio="xMidYMid meet">
+                                        <defs>
+                                            <radialGradient id="hotspotGlow" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#fb923c" stop-opacity="0.95"/>
+                                                <stop offset="45%" stop-color="#ef4444" stop-opacity="0.45"/>
+                                                <stop offset="100%" stop-color="#ef4444" stop-opacity="0"/>
+                                            </radialGradient>
+                                            <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#f97316" stop-opacity="0.9"/>
+                                                <stop offset="50%" stop-color="#ef4444" stop-opacity="0.85"/>
+                                                <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.9"/>
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- Detailed World Map Continents Silhouette -->
+                                        <g fill="#1b2638" stroke="#26354d" stroke-width="0.6">
+                                            <!-- North America -->
+                                            <path d="M18,32 L38,24 L65,26 L88,36 L82,52 L68,66 L55,78 L42,84 L32,74 L24,58 L14,45 Z"/>
+                                            <!-- Greenland -->
+                                            <path d="M92,16 L116,14 L122,26 L104,32 L92,25 Z"/>
+                                            <!-- South America -->
+                                            <path d="M68,94 L92,98 L104,114 L96,138 L82,158 L72,155 L68,128 L62,108 Z"/>
+                                            <!-- Europe -->
+                                            <path d="M138,34 L162,26 L184,30 L188,48 L174,58 L154,62 L140,54 L135,44 Z"/>
+                                            <!-- Africa -->
+                                            <path d="M138,68 L166,66 L186,78 L192,102 L180,134 L164,142 L152,122 L144,98 L134,82 Z"/>
+                                            <!-- Asia & Russia -->
+                                            <path d="M186,26 L232,18 L282,24 L302,38 L294,62 L278,84 L254,96 L228,94 L208,82 L192,64 L186,44 Z"/>
+                                            <!-- Southeast Asia / Indonesia -->
+                                            <path d="M246,102 L268,100 L282,112 L262,118 L245,110 Z"/>
+                                            <!-- Australia -->
+                                            <path d="M254,126 L286,124 L296,142 L282,156 L258,152 L250,138 Z"/>
+                                        </g>
+
+                                        <!-- Attack Trajectory Arcs -->
+                                        <g fill="none" stroke="url(#arcGrad)" stroke-width="1.2" stroke-linecap="round">
+                                            <path class="map-arc" d="M52,66 Q108,34 162,52"/>
+                                            <path class="map-arc" d="M52,66 Q145,22 238,68"/>
+                                            <path class="map-arc" d="M162,52 Q205,32 248,74"/>
+                                            <path class="map-arc" d="M212,48 Q235,52 248,74"/>
+                                            <path class="map-arc" d="M84,126 Q125,84 162,52"/>
+                                            <path class="map-arc" d="M172,96 Q212,82 248,74"/>
+                                        </g>
+
+                                        <!-- Glowing Hotspot Nodes -->
+                                        <!-- US West / Central -->
+                                        <circle cx="52" cy="66" r="11" fill="url(#hotspotGlow)"/>
+                                        <circle cx="52" cy="66" r="3.2" fill="#fde047"/>
+                                        <!-- US East -->
+                                        <circle cx="72" cy="58" r="6" fill="url(#hotspotGlow)"/>
+                                        <circle cx="72" cy="58" r="2" fill="#fb923c"/>
+                                        <!-- South America -->
+                                        <circle cx="84" cy="126" r="7" fill="url(#hotspotGlow)"/>
+                                        <circle cx="84" cy="126" r="2.2" fill="#f87171"/>
+                                        <!-- Europe / Germany -->
+                                        <circle cx="162" cy="52" r="9" fill="url(#hotspotGlow)"/>
+                                        <circle cx="162" cy="52" r="2.8" fill="#fde047"/>
+                                        <!-- Russia -->
+                                        <circle cx="212" cy="48" r="8" fill="url(#hotspotGlow)"/>
+                                        <circle cx="212" cy="48" r="2.4" fill="#fb923c"/>
+                                        <!-- China / East Asia -->
+                                        <circle cx="248" cy="74" r="11" fill="url(#hotspotGlow)"/>
+                                        <circle cx="248" cy="74" r="3.2" fill="#fde047"/>
+                                        <!-- Secondary Asia Node -->
+                                        <circle cx="232" cy="82" r="6.5" fill="url(#hotspotGlow)"/>
+                                        <circle cx="232" cy="82" r="2" fill="#f87171"/>
+                                        <!-- Africa Node -->
+                                        <circle cx="172" cy="96" r="6.5" fill="url(#hotspotGlow)"/>
+                                        <circle cx="172" cy="96" r="2" fill="#f87171"/>
+                                    </svg>
+                                </div>
+
+                                <!-- Country Breakdown List (Populated live from /api/system-telemetry) -->
+                                <div class="country-list" id="attackSourcesList">
+                                    <div class="country-row">
+                                        <span class="country-left"><span class="country-dot" style="background:#ef4444;"></span>United States</span>
+                                        <span class="country-count">...</span>
+                                    </div>
+                                    <div class="country-row">
+                                        <span class="country-left"><span class="country-dot" style="background:#f97316;"></span>China</span>
+                                        <span class="country-count">0</span>
+                                    </div>
+                                    <div class="country-row">
+                                        <span class="country-left"><span class="country-dot" style="background:#eab308;"></span>Russia</span>
+                                        <span class="country-count">0</span>
+                                    </div>
+                                    <div class="country-row">
+                                        <span class="country-left"><span class="country-dot" style="background:#facc15;"></span>Germany</span>
+                                        <span class="country-count">0</span>
+                                    </div>
+                                    <div class="country-row">
+                                        <span class="country-left"><span class="country-dot" style="background:#64748b;"></span>Other</span>
+                                        <span class="country-count">...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Right Tall Panel: Recent Alerts -->
+                <section class="panel-card recent-alerts-card">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Recent Alerts</h2>
+                        <a href="#alerts" class="view-all-link" id="viewAllRecentBtn">View all <span>→</span></a>
+                    </div>
+                    <div class="recent-alerts-list" id="recentAlertsList">
+                        <!-- Dynamically populated 100% from real live Windows OS & Browser sockets -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- ==================== LOWER DASHBOARD GRID ==================== -->
+            <div class="lower-grid" id="alertsSection">
+                <!-- Bottom-Left: Alerts Table -->
+                <section class="panel-card alerts-table-card">
+                    <div class="panel-header">
+                        <div class="panel-title-with-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                <path d="M12 2L4 5.5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5.5L12 2z" stroke="#e2e8f0" stroke-width="1.8"/>
+                                <path d="M12 2v20.5c-4.59-1.15-8-5.86-8-10.91V5.5L12 2z" fill="#e2e8f0"/>
+                            </svg>
+                            <h2 class="panel-title">Alerts</h2>
+                        </div>
+                        <a href="#all-alerts" class="view-all-link" id="viewAllTableBtn">View all <span>→</span></a>
+                    </div>
+
+                    <div class="alerts-table-wrap">
+                        <table class="alerts-table">
+                            <thead>
+                                <tr>
+                                    <th>TIME</th>
+                                    <th>SEVERITY</th>
+                                    <th>TYPE</th>
+                                    <th>SOURCE</th>
+                                    <th>DETAILS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alertsTableBody">
+                                <!-- Populated dynamically from live Windows OS sockets -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Bottom-Middle: Alert Details -->
+                <section class="panel-card alert-details-card" id="alertDetailsPanel">
+                    <div class="panel-header">
+                        <div class="panel-title-with-icon">
+                            <span class="details-header-icon" id="detailHeaderIcon">
+                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#10b981" stroke-width="2.2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                </svg>
+                            </span>
+                            <h2 class="panel-title">Alert Details</h2>
+                        </div>
+                        <span class="severity-header-badge badge-low" id="detailSeverityBadge">Low</span>
+                    </div>
+
+                    <div class="alert-details-body">
+                        <h3 class="detail-event-title" id="detailTitle">Scanning live network sockets...</h3>
+                        <div class="detail-event-meta" id="detailMeta">Live now &nbsp;·&nbsp; HTTPS &nbsp;·&nbsp; Local Host</div>
+
+                        <p class="detail-description" id="detailDescription">
+                            Inspecting active outbound TCP/UDP connections across Opera, Edge, Chrome, and desktop apps.
+                        </p>
+
+                        <div class="detail-kv-list">
+                            <div class="detail-kv-row">
+                                <span class="kv-label">Remote IP</span>
+                                <span class="kv-value">
+                                    <span id="detailSourceIp">--</span>
+                                    <button class="copy-ip-btn" data-copy-target="detailSourceIp" title="Copy IP">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="detail-kv-row">
+                                <span class="kv-label">Endpoint</span>
+                                <span class="kv-value">
+                                    <span id="detailDestIp">--</span>
+                                    <button class="copy-ip-btn" data-copy-target="detailDestIp" title="Copy Endpoint">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                            <div class="detail-kv-row">
+                                <span class="kv-label">Protocol</span>
+                                <span class="kv-value" id="detailProtocol">TCP / 443</span>
+                            </div>
+                            <div class="detail-kv-row">
+                                <span class="kv-label">Provider</span>
+                                <span class="kv-value" id="detailAttempts">--</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-actions">
+                            <button class="btn-block-ip" id="blockIpBtn">
+                                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <polyline points="9 12 11 14 15 10"/>
+                                </svg>
+                                <span id="blockIpBtnText">Block IP</span>
+                            </button>
+                            <button class="btn-view-details" id="viewFullDetailsBtn">View full details</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bottom-Right: Settings -->
+                <section class="panel-card settings-card" id="settingsSection">
+                    <div class="panel-header">
+                        <div class="panel-title-with-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"/>
+                                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                            </svg>
+                            <h2 class="panel-title">Settings</h2>
+                        </div>
+                    </div>
+
+                    <div class="settings-list">
+                        <button class="setting-item-btn" data-setting="rules">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                                    <path d="M12 2L4 5.5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5.5L12 2z" stroke="#cbd5e1" stroke-width="1.8"/>
+                                    <path d="M12 2v20.5c-4.59-1.15-8-5.86-8-10.91V5.5L12 2z" fill="#cbd5e1"/>
+                                </svg>
+                            </span>
+                            <span class="setting-text">
+                                <span class="setting-name">Detection Rules</span>
+                                <span class="setting-desc">Manage intrusion detection rules</span>
+                            </span>
+                            <span class="setting-arrow">›</span>
+                        </button>
+
+                        <button class="setting-item-btn" data-setting="blocked-ips">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#cbd5e1" stroke-width="1.9">
+                                    <circle cx="12" cy="12" r="9"/>
+                                    <line x1="5.7" y1="5.7" x2="18.3" y2="18.3"/>
+                                </svg>
+                            </span>
+                            <span class="setting-text">
+                                <span class="setting-name">Blocked IPs</span>
+                                <span class="setting-desc" id="blockedIpsDesc">View and manage blocked addresses</span>
+                            </span>
+                            <span class="setting-arrow">›</span>
+                        </button>
+
+                        <button class="setting-item-btn" data-setting="notifications">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#cbd5e1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                                    <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                                </svg>
+                            </span>
+                            <span class="setting-text">
+                                <span class="setting-name">Notification Settings</span>
+                                <span class="setting-desc">Configure alerts and notifications</span>
+                            </span>
+                            <span class="setting-arrow">›</span>
+                        </button>
+
+                        <button class="setting-item-btn" data-setting="updates">
+                            <span class="setting-icon">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#cbd5e1" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="23 4 23 10 17 10"/>
+                                    <polyline points="1 20 1 14 7 14"/>
+                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                                </svg>
+                            </span>
+                            <span class="setting-text">
+                                <span class="setting-name">System Updates</span>
+                                <span class="setting-desc">Keep Sentinel up to date</span>
+                            </span>
+                            <span class="setting-arrow">›</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
+        </main>
     </div>
-  </div>
 
-  <!-- ================= "PROTECT ME" WIZARD MODAL ================= -->
-  <div id="modal-protect" class="modal-overlay">
-    <div class="modal-card" style="max-width: 760px;">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          Sentinel AI Protection Sweep
+    <!-- ==================== OPERA, EDGE & CHROME LIVE LINK MODAL ==================== -->
+    <div class="sentinel-modal-backdrop" id="browserLinkModal" style="display:none;">
+        <div class="sentinel-modal" style="width: 720px;">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span class="modal-shield">⚡</span>
+                    <div>
+                        <h3>Opera, Microsoft Edge &amp; Google Chrome — Live Telemetry Link</h3>
+                        <p>Real-time Windows OS socket inspection &amp; AI tracker interception across all browsers &amp; apps</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="closeBrowserModalBtn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="browser-cards-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="browser-status-box">
+                        <div class="bs-top">
+                            <strong>Opera (<code>opera.exe</code>)</strong>
+                            <span class="bs-badge" id="operaModalBadge">Checking...</span>
+                        </div>
+                        <div class="bs-metrics" id="operaModalMetrics">Scanning active sockets...</div>
+                        <button class="bs-action-btn" id="launchOperaBtn">Launch Opera with Sentinel</button>
+                    </div>
+
+                    <div class="browser-status-box">
+                        <div class="bs-top">
+                            <strong>Edge (<code>msedge.exe</code>)</strong>
+                            <span class="bs-badge" id="edgeModalBadge">Checking...</span>
+                        </div>
+                        <div class="bs-metrics" id="edgeModalMetrics">Scanning active sockets...</div>
+                        <button class="bs-action-btn" id="launchEdgeBtn">Launch Edge with Sentinel</button>
+                    </div>
+
+                    <div class="browser-status-box">
+                        <div class="bs-top">
+                            <strong>Chrome (<code>chrome.exe</code>)</strong>
+                            <span class="bs-badge" id="chromeModalBadge">Checking...</span>
+                        </div>
+                        <div class="bs-metrics" id="chromeModalMetrics">Scanning active sockets...</div>
+                        <button class="bs-action-btn" id="launchChromeBtn">Launch Chrome with Sentinel</button>
+                    </div>
+                </div>
+
+                <div class="browser-status-box" style="margin-bottom: 14px;">
+                    <div class="bs-top">
+                        <strong>Other Desktop &amp; System Apps (Live OS Sockets)</strong>
+                        <span class="bs-badge" id="otherAppsBadge">Active</span>
+                    </div>
+                    <div class="bs-metrics" id="otherAppsMetrics">Scanning Windows TCP/UDP sockets across all processes...</div>
+                </div>
+
+                <div class="modal-sync-row">
+                    <button class="btn-block-ip" id="syncBrowsersNowBtn" style="width:auto; padding: 9px 18px;">
+                        Sync All Live Connections (Opera, Edge, Chrome &amp; Apps) into Alerts Table
+                    </button>
+                    <span class="sync-feedback" id="syncFeedbackText"></span>
+                </div>
+            </div>
         </div>
-        <button class="modal-close" onclick="closeModal('modal-protect')">&times;</button>
-      </div>
-
-      <div id="protect-modal-body" class="modal-body">
-        <!-- Injected via JavaScript -->
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-protect')">Cancel</button>
-        <button id="btn-apply-protect" class="btn-protect" style="padding: 10px 20px; font-size: 14px;" onclick="applyProtectionPlan()">
-          Apply Nemotron Protection Plan
-        </button>
-      </div>
     </div>
-  </div>
 
-  <!-- ================= "EXPLAIN MY PRIVACY" REPORT MODAL ================= -->
-  <div id="modal-explain" class="modal-overlay">
-    <div class="modal-card" style="max-width: 800px;">
-      <div class="modal-header">
-        <div class="modal-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          Sentinel Privacy Audit Report
+    <!-- ==================== UNIVERSAL INTERACTIVE MODAL (AI DETAILS / RULES / BLOCKED IPS / UPDATES) ==================== -->
+    <div class="sentinel-modal-backdrop" id="universalActionModal" style="display:none;">
+        <div class="sentinel-modal">
+            <div class="modal-header">
+                <div class="modal-title-row">
+                    <span class="modal-shield" id="uniModalIcon">🛡️</span>
+                    <div>
+                        <h3 id="uniModalTitle">Sentinel Action</h3>
+                        <p id="uniModalSubtitle">Intrusion Detection &amp; AI Policy Engine</p>
+                    </div>
+                </div>
+                <button class="modal-close-btn" id="closeUniModalBtn">✕</button>
+            </div>
+            <div class="modal-body" id="uniModalBody" style="padding-top:14px;"></div>
         </div>
-        <button class="modal-close" onclick="closeModal('modal-explain')">&times;</button>
-      </div>
-
-      <div id="explain-modal-body" class="modal-body">
-        <!-- Injected via JavaScript -->
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-action btn-investigate" onclick="window.print()">Print / Export Audit</button>
-        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-explain')">Close</button>
-      </div>
     </div>
-  </div>
 
-  <!-- ================= SETTINGS MODAL ================= -->
-  <div id="modal-settings" class="modal-overlay">
-    <div class="modal-card" style="max-width: 560px;">
-      <div class="modal-header">
-        <div class="modal-title">Settings & Nebius Token Factory</div>
-        <button class="modal-close" onclick="closeModal('modal-settings')">&times;</button>
-      </div>
+    <!-- Toast Notification -->
+    <div id="sentinelToast" class="sentinel-toast"></div>
 
-      <div class="modal-body">
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
-            Nebius Token Factory API Key
-          </label>
-          <input type="password" id="input-api-key" class="search-box" style="width: 100%; padding: 10px;" placeholder="nvapi-... or nebius_...">
-          <div style="font-size: 11px; color: var(--text-dim); margin-top: 4px;">
-            Keys are kept in local process memory and .env.
-          </div>
-        </div>
-
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
-            NVIDIA Nemotron Model
-          </label>
-          <input type="text" id="input-model" class="search-box" style="width: 100%; padding: 10px;" value="nvidia/nemotron-3.5-lightning-30b-a3b">
-        </div>
-
-        <div>
-          <label style="display: block; font-size: 13px; font-weight: 600; color: #fff; margin-bottom: 6px;">
-            Nebius Base URL Endpoint
-          </label>
-          <input type="text" id="input-base-url" class="search-box" style="width: 100%; padding: 10px;" value="https://integrate.api.nvidia.com/v1">
-        </div>
-
-        <div style="background: var(--bg-card-inner); padding: 14px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-          <div style="font-size: 11px; font-weight: 700; color: var(--text-dim); text-transform: uppercase;">CONNECTION STATUS</div>
-          <div id="nebius-status-badge" style="font-size: 14px; font-weight: 700; color: var(--emerald); margin-top: 4px;">
-            CONNECTED & ACTIVE
-          </div>
-        </div>
-
-        <div style="border-top: 1px solid var(--border); padding-top: 14px;">
-          <button class="btn-action btn-block" onclick="resetDemoEnvironment()">
-            Reset Demo Traffic & Clear Rules
-          </button>
-        </div>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn-action" style="background: var(--bg-card); color: var(--text-muted);" onclick="closeModal('modal-settings')">Cancel</button>
-        <button class="btn-action btn-allow" onclick="saveSettings()">Save Configuration</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast Container -->
-  <div id="toast-container" class="toast-container"></div>
-
-  <script src="/static/js/sentinel.js"></script>
+    <script src="/static/js/sentinel.js?v=20261012_sentinel_v18"></script>
 </body>
 </html>

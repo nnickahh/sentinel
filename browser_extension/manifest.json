@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "CyberGuard AI — Sentinel Browser Link (Edge & Chrome)",
+  "version": "1.0.0",
+  "description": "Links Microsoft Edge and Google Chrome directly to CyberGuard AI / Sentinel (NVIDIA Nemotron on Nebius Token Factory) for real-time tracker & telemetry defense.",
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://127.0.0.1:8765/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CyberGuard AI — Sentinel Privacy Autopilot"
+  }
+}

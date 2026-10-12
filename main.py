@@ -18,7 +18,7 @@ from backend.config import settings
 from backend.app import app, state
 
 def print_banner(host: str, port: int, mode_str: str, nebius_status: str):
-    banner = f"""
+    banner = rf"""
 ========================================================================
    ____  ____  _   _ _____ ___ _   _ _____ _     
   / ___|| ____| \ | |_   _|_ _| \ | | ____| |    
@@ -36,9 +36,23 @@ def print_banner(host: str, port: int, mode_str: str, nebius_status: str):
 """
     print(banner)
 
+def _run_mirror_listener(host: str, port: int):
+    """Run an auxiliary listener thread so both IPv4/IPv6 localhost and common ports resolve cleanly."""
+    try:
+        uvicorn.run(app, host=host, port=port, log_level="error")
+    except Exception:
+        pass
+
 def start_server(host: str, port: int):
-    """Run FastAPI uvicorn server."""
-    uvicorn.run(app, host=host, port=port, log_level="warning")
+    """Run FastAPI uvicorn server on IPv4 (127.0.0.1 / 0.0.0.0) + IPv6 (::1) and mirror ports."""
+    threading.Thread(target=_run_mirror_listener, args=("::1", port), daemon=True).start()
+    for extra_port in [80, 8000, 8080, 3000, 5000]:
+        if extra_port != port:
+            threading.Thread(target=_run_mirror_listener, args=("0.0.0.0", extra_port), daemon=True).start()
+            threading.Thread(target=_run_mirror_listener, args=("::1", extra_port), daemon=True).start()
+
+    bind_host = "0.0.0.0" if host in ["127.0.0.1", "localhost"] else host
+    uvicorn.run(app, host=bind_host, port=port, log_level="warning")
 
 def main():
     parser = argparse.ArgumentParser(description="Sentinel - AI Privacy Desktop")
@@ -60,8 +74,8 @@ def main():
     mode_str = "DEMO MODE (Simulated Traffic)" if state["demo_mode"] else "LIVE SYSTEM NETWORK MONITOR"
     nebius_status = "Connected & Active" if settings.is_nebius_configured() else "Ready / Local Fallback Mode"
 
-    print_banner(args.host, args.port, mode_str, nebius_status)
-    app_url = f"http://{args.host}:{args.port}"
+    print_banner("127.0.0.1", args.port, mode_str, nebius_status)
+    app_url = f"http://127.0.0.1:{args.port}"
 
     if args.desktop:
         # Start server in daemon thread and run PyQt6 desktop window in main thread
@@ -71,7 +85,7 @@ def main():
         from desktop.window import launch_desktop_window
         launch_desktop_window(app_url)
     elif not args.web_only:
-        # Automatically open browser for evaluator convenience
+        # Automatically open browser using numeric IPv4 127.0.0.1 (bypasses DNS issues with 'localhost')
         threading.Timer(1.2, lambda: webbrowser.open(app_url)).start()
         start_server(args.host, args.port)
     else:
@@ -79,3 +93,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

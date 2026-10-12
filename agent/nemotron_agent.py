@@ -19,14 +19,16 @@ from backend.models import (
     ProtectMeBatchItem,
     RiskLevel,
     ActionDecision,
-    UserDecisionRecord
+    UserDecisionRecord,
+    AskQuestionResponse
 )
 from privacy_engine.sanitizer import PrivacySanitizer
 from agent.prompts import (
     NEMOTRON_SYSTEM_PROMPT,
     INVESTIGATE_PROMPT_TEMPLATE,
     PROTECT_ME_PROMPT_TEMPLATE,
-    PRIVACY_REPORT_PROMPT_TEMPLATE
+    PRIVACY_REPORT_PROMPT_TEMPLATE,
+    ASK_QUESTION_PROMPT_TEMPLATE
 )
 from agent.fallback_engine import FallbackPrivacyEngine
 
@@ -315,3 +317,69 @@ class NemotronPrivacyAgent:
             return FallbackPrivacyEngine.generate_report_narrative(
                 privacy_score, total_connections, trackers_detected, blocked_count, high_risk_count, top_apps
             )
+
+    async def ask_question(
+        self,
+        question: str,
+        events: List[ConnectionEvent],
+        rules: List[UserDecisionRecord],
+        privacy_score: int,
+        privacy_mode: str = "normal"
+    ) -> AskQuestionResponse:
+        """
+        Answer natural-language user privacy questions using NVIDIA Nemotron via Nebius Token Factory.
+        """
+        if not self.is_connected():
+            return FallbackPrivacyEngine.answer_question(question, events, privacy_score, privacy_mode)
+
+        events_summary = [
+            {
+                "app": ev.application,
+                "domain": ev.domain,
+                "ip": ev.ip,
+                "category": ev.category.value,
+                "risk": ev.risk_level.value,
+                "status": ev.status.value,
+                "packets": ev.connection_count,
+                "details": ev.details
+            }
+            for ev in events[:12]
+        ]
+        rules_summary = [
+            {"app": r.application, "domain": r.domain, "decision": r.decision.value}
+            for r in rules[:10]
+        ]
+
+        prompt = ASK_QUESTION_PROMPT_TEMPLATE.format(
+            question=question,
+            privacy_mode=privacy_mode,
+            privacy_score=privacy_score,
+            events_json=json.dumps(events_summary, indent=2),
+            rules_json=json.dumps(rules_summary, indent=2)
+        )
+
+        try:
+            response = await self._client.chat.completions.create(
+                model=settings.nebius_model,
+                messages=[
+                    {"role": "system", "content": NEMOTRON_SYSTEM_PROMPT},
+                    {"role": "user", "content": prompt}
+                ],
+                temperature=0.2,
+                max_tokens=800
+            )
+            raw_content = response.choices[0].message.content or ""
+            data = self._extract_json(raw_content)
+
+            return AskQuestionResponse(
+                question=question,
+                answer=data.get("answer", "Analyzed by NVIDIA Nemotron."),
+                related_apps=data.get("related_apps", []),
+                related_domains=data.get("related_domains", []),
+                risk_summary=data.get("risk_summary", "medium"),
+                recommended_actions=data.get("recommended_actions", []),
+                source_model=f"NVIDIA Nemotron ({settings.nebius_model})"
+            )
+        except Exception as e:
+            logger.warning(f"Nemotron ask_question error: {e}. Falling back to local engine.")
+            return FallbackPrivacyEngine.answer_question(question, events, privacy_score, privacy_mode)

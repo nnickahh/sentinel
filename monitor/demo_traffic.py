@@ -18,7 +18,10 @@ DEMO_SCENARIOS = [
         "ip": "142.250.190.46",
         "port": 443,
         "base_count": 84,
-        "description": "Cross-site advertising tracking network beaconing user clicks and queries"
+        "country": "United States",
+        "description": "Cross-site advertising tracking network beaconing user clicks and queries",
+        "ai_explanation": "Nemotron Analysis: Collects cross-site browsing profiles, ad click identifiers, and behavioral conversion signals. High privacy risk; blocking stops targeted ad tracking without affecting web browsing.",
+        "breakage_risk": "None — safe to block without breaking websites"
     },
     {
         "app": "spotify",
@@ -26,7 +29,10 @@ DEMO_SCENARIOS = [
         "ip": "35.186.224.25",
         "port": 443,
         "base_count": 52,
-        "description": "Background audio listening behavior and playback UI telemetry"
+        "country": "Sweden",
+        "description": "Background audio listening behavior and playback UI telemetry",
+        "ai_explanation": "Nemotron Analysis: Transmits granular playback interaction telemetry, skip rates, and session duration metrics. Medium risk; blocking halts telemetry upload while audio streaming continues.",
+        "breakage_risk": "Low — audio streaming unaffected"
     },
     {
         "app": "discord",
@@ -34,15 +40,21 @@ DEMO_SCENARIOS = [
         "ip": "162.159.135.232",
         "port": 443,
         "base_count": 31,
-        "description": "Application interaction funnels and UI click metrics"
+        "country": "United States",
+        "description": "Application interaction funnels and UI click metrics",
+        "ai_explanation": "Nemotron Analysis: Captures client UI click events, server navigation funnels, and active window focus state. Safe to block; voice and chat channels remain 100% functional.",
+        "breakage_risk": "None — voice and chat work normally"
     },
     {
         "app": "chrome",
         "domain": "fingerprint.device-id.net",
-        "ip": "104.21.65.112",
+        "ip": "155.31.171.33",
         "port": 443,
         "base_count": 19,
-        "description": "Aggressive canvas and hardware font device fingerprinting probe"
+        "country": "China",
+        "description": "Malware signature & aggressive canvas/hardware device fingerprinting probe",
+        "ai_explanation": "Nemotron Critical Alert: Probes WebGL, AudioContext, and GPU rendering signatures from 155.31.171.33 to construct a permanent hardware fingerprint across sessions. Immediate block recommended.",
+        "breakage_risk": "None — malicious tracker only"
     },
     {
         "app": "zoom",
@@ -50,7 +62,10 @@ DEMO_SCENARIOS = [
         "ip": "170.114.10.88",
         "port": 443,
         "base_count": 27,
-        "description": "Call quality telemetry and bandwidth telemetry ping"
+        "country": "United States",
+        "description": "Call quality telemetry and device diagnostic ping",
+        "ai_explanation": "Nemotron Analysis: Periodically beacons microphone/camera hardware metadata and network jitter statistics. Medium risk; blocking prevents background diagnostics while video calls work normally.",
+        "breakage_risk": "None — meetings and video unaffected"
     },
     {
         "app": "slack",
@@ -58,7 +73,10 @@ DEMO_SCENARIOS = [
         "ip": "151.101.65.140",
         "port": 443,
         "base_count": 115,
-        "description": "Essential static UI styling and avatar delivery (safe)"
+        "country": "United States",
+        "description": "Essential static UI styling and avatar delivery (safe)",
+        "ai_explanation": "Nemotron Analysis: Essential content delivery network serving workspace icons, attachments, and stylesheets. No behavioral tracking detected. AI Autopilot preserves this connection.",
+        "breakage_risk": "High — blocking will break Slack images & UI"
     },
     {
         "app": "browser",
@@ -66,7 +84,10 @@ DEMO_SCENARIOS = [
         "ip": "54.187.174.169",
         "port": 443,
         "base_count": 8,
-        "description": "Encrypted payment processor gateway (safe essential API)"
+        "country": "United States",
+        "description": "Encrypted payment processor gateway (safe essential API)",
+        "ai_explanation": "Nemotron Analysis: Verified PCI-DSS encrypted payment API gateway. Required for checkout and billing flows. AI Autopilot whitelists this connection to prevent breaking transactions.",
+        "breakage_risk": "High — blocking will break checkout flows"
     },
     {
         "app": "edge",
@@ -74,7 +95,10 @@ DEMO_SCENARIOS = [
         "ip": "20.190.159.2",
         "port": 443,
         "base_count": 46,
-        "description": "Microsoft Windows timeline sync and browsing history telemetry"
+        "country": "Russia",
+        "description": "Microsoft Windows timeline sync and browsing history telemetry",
+        "ai_explanation": "Nemotron Analysis: Synchronizes local application launch timestamps and browser tab history to cloud telemetry endpoints. High privacy exposure; safe to block.",
+        "breakage_risk": "None — local browser works normally"
     },
     {
         "app": "vscode",
@@ -82,7 +106,10 @@ DEMO_SCENARIOS = [
         "ip": "20.42.72.100",
         "port": 443,
         "base_count": 38,
-        "description": "Code editor command usage and crash telemetry"
+        "country": "Brazil",
+        "description": "Code editor command usage and extension telemetry",
+        "ai_explanation": "Nemotron Analysis: Uploads workspace extension invocation counts, crash dumps, and editor performance metrics. Safe to block without impacting coding or extensions.",
+        "breakage_risk": "None — editor and extensions unaffected"
     }
 ]
 
@@ -105,6 +132,8 @@ class DemoTrafficGenerator:
             if decision_rec:
                 if decision_rec.decision in [ActionDecision.BLOCK]:
                     status = ConnectionStatus.BLOCKED
+                elif decision_rec.decision in [ActionDecision.WARN]:
+                    status = ConnectionStatus.WARNED
                 elif decision_rec.decision in [ActionDecision.ALLOW, ActionDecision.ALWAYS_ALLOW]:
                     status = ConnectionStatus.ALLOWED
 
@@ -116,6 +145,11 @@ class DemoTrafficGenerator:
                 connection_count=scenario["base_count"],
                 status=status
             )
+            if scenario.get("description"):
+                ev.details = scenario["description"]
+            ev.country = scenario.get("country", "United States")
+            ev.ai_explanation = scenario.get("ai_explanation")
+            ev.breakage_risk = scenario.get("breakage_risk", "None — safe to block")
             self._events[ev.domain] = ev
 
     def get_events(self) -> List[ConnectionEvent]:
@@ -129,11 +163,13 @@ class DemoTrafficGenerator:
             if rec:
                 if rec.decision == ActionDecision.BLOCK:
                     ev.status = ConnectionStatus.BLOCKED
+                elif rec.decision == ActionDecision.WARN:
+                    ev.status = ConnectionStatus.WARNED
                 else:
                     ev.status = ConnectionStatus.ALLOWED
             else:
                 # Still active
-                if ev.status != ConnectionStatus.BLOCKED:
+                if ev.status not in [ConnectionStatus.BLOCKED, ConnectionStatus.WARNED]:
                     ev.status = ConnectionStatus.ACTIVE
 
             # If active, randomly increment counter slightly to simulate live traffic

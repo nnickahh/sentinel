@@ -21,6 +21,7 @@ class Category(str, Enum):
 
 class ActionDecision(str, Enum):
     BLOCK = "block"
+    WARN = "warn"
     ALLOW = "allow"
     ALWAYS_ALLOW = "always_allow"
     ASK_LATER = "ask_later"
@@ -28,7 +29,13 @@ class ActionDecision(str, Enum):
 class ConnectionStatus(str, Enum):
     ACTIVE = "active"
     BLOCKED = "blocked"
+    WARNED = "warned"
     ALLOWED = "allowed"
+
+class PrivacyMode(str, Enum):
+    NORMAL = "normal"
+    STRICT = "strict"
+    PARANOID = "paranoid"
 
 class ConnectionEvent(BaseModel):
     id: str
@@ -46,6 +53,9 @@ class ConnectionEvent(BaseModel):
     status: ConnectionStatus = ConnectionStatus.ACTIVE
     vendor: Optional[str] = "Unknown"
     details: Optional[str] = None
+    country: Optional[str] = "United States"
+    ai_explanation: Optional[str] = None
+    breakage_risk: Optional[str] = "None — safe to block without breaking app"
 
 class SanitizedTelemetry(BaseModel):
     application: str
@@ -112,12 +122,18 @@ class DashboardStats(BaseModel):
     total_connections: int
     trackers_detected: int
     blocked_count: int
+    warned_count: int = 0
     high_risk_count: int
-    medium_risk_count: int
-    low_risk_count: int
+    medium_risk_count: int = 0
+    low_risk_count: int = 0
     demo_mode: bool
     nebius_connected: bool
     model_name: str
+    privacy_mode: str = "normal"
+    autopilot_enabled: bool = True
+    active_threats: int = 1
+    unread_alerts: int = 0
+    system_health: float = 98.2
 
 class PrivacyReport(BaseModel):
     score: int
@@ -131,3 +147,43 @@ class PrivacyReport(BaseModel):
     key_findings: List[str]
     recommended_actions: List[str]
     narrative_report: str
+
+class TimelineEvent(BaseModel):
+    id: str
+    timestamp: str
+    time_label: str
+    title: str
+    description: str
+    application: str
+    domain: str
+    ip: Optional[str] = None
+    risk_level: RiskLevel = RiskLevel.MEDIUM
+    event_type: str = "detection"
+    action_taken: str = "detected"
+    ai_reasoning: Optional[str] = None
+
+class AskQuestionRequest(BaseModel):
+    question: str
+    application: Optional[str] = None
+    domain: Optional[str] = None
+
+class AskQuestionResponse(BaseModel):
+    question: str
+    answer: str
+    related_apps: List[str] = []
+    related_domains: List[str] = []
+    risk_summary: str = "medium"
+    recommended_actions: List[str] = []
+    source_model: str = "NVIDIA Nemotron"
+
+class AutopilotResponse(BaseModel):
+    autopilot_enabled: bool
+    privacy_mode: str
+    blocked_count: int
+    warned_count: int
+    preserved_essential_count: int
+    blocked_domains: List[str]
+    preserved_domains: List[str]
+    previous_score: int
+    new_score: int
+    narrative: str
